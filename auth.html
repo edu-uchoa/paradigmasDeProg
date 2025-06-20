@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Auth Demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div id="auth-container" class="auth-box">
+            
+            <div id="auth-forms">
+                <!-- Login Form -->
+                <form id="login-form" class="auth-form">
+                    <h2 class="text-center mb-4" id="auth-title">Login</h2>
+                    <div class="mb-3">
+                        <label for="login-email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="login-email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="login-password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                    <div class="text-center mt-3">
+                        <a href="#" id="show-register">Don't have an account? Register</a>
+                    </div>
+                </form>
+                
+                <!-- Register Form -->
+                <form id="register-form" class="auth-form" style="display: none;">
+                    <h2 class="text-center mb-4" id="auth-title">Cadastro</h2>
+                    <div class="mb-3">
+                        <label for="register-email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="register-email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="register-password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="register-password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="register-confirm-password" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="register-confirm-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Register</button>
+                    <div class="text-center mt-3">
+                        <a href="#" id="show-login">Already have an account? Login</a>
+                    </div>
+                </form>
+            </div>
+            
+            <div id="auth-message" class="mt-3 text-center"></div>
+        </div>
+        
+        <div id="protected-content" style="display: none;">
+            <div class="header">
+                <h2>PARADIGMAS DE LINGUAGENS DE PROGRAMAÇÃO</h2>
+                <div class="user-info">
+                    <p id="user-email"></p>
+                    <button id="sign-out-btn" class="btn btn-danger">Sign Out</button>
+                </div>
+            </div>
+        
+            <div class="content-buttons mb-4">
+                <button class="content-btn active" data-content="content1">IMPERATIVO</button>
+                <button class="content-btn" data-content="content2">DECLARATIVO</button>
+                <button class="content-btn" data-content="content3">LÓGICO</button>
+                <button class="content-btn" data-content="content4">FUNCIONAL</button>
+                <button class="content-btn" data-content="content5">POE</button>
+                <button class="content-btn" data-content="content6">POO</button>
+                <button class="content-btn" data-content="content7">CONCORRENTE</button>
+                <button class="content-btn" data-content="content8">MULTIPARADIGMA</button>
+
+            </div>
+        
+            <div id="content-display">
+                <div id="content1" class="content-section" style="display: block;">
+                    <h3>PARADIGMA IMPERATIVO</h3>
+                    <p>
+                        <strong>Definição:</strong><br>
+                        O paradigma imperativo descreve a computação como uma sequência de comandos que alteram o estado do programa. É baseado em "como" fazer algo, utilizando instruções passo a passo (variáveis, loops, condicionais).
+                    </p>
+                    <br>
+                    <p>
+                        <strong>Aplicações na Indústria:</strong><br>
+                        - Sistemas embarcados (controle de hardware).<br>
+                        - Aplicações de baixo nível (drivers, kernels de SO).<br>
+                        - Scripting (Bash, Python para automação).
+                    </p>
+                    <br>
+                    <div class="code-container">
+                        <!-- Bloco de Código (Highlight.js) -->
+                        <pre><code class="language-javascript">
+                            // Exemplo: Função que calcula a soma (JAVASCRIPT)
+                            function sum(a, b) {
+                                return a + b;
+                            }
+                            console.log(sum(2, 3));
+                        </code></pre>
+                
+                        <!-- Bloco de Saída -->
+                        <div class="output">
+                            <strong>Output:</strong>
+                            5
+                        </div>
+                    </div>
+                </div>
+                <div id="content2" class="content-section" style="display: none;">
+                    <h3>PARADIGMA DECLARATIVO</h3>
+                    <p>
+                        <strong>Definição:</strong><br>
+                        Foca em "o que" deve ser feito, sem especificar os passos detalhados. Divide-se em subparadigmas como lógico e funcional.                    <p>
+                    </p>
+                    <br>   
+                    <p>
+                        <strong>Aplicações na Indústria:</strong><br>
+                            - Bancos de dados (SQL é declarativo).<br>
+                            - Processamento de dados (Pandas, Spark).<br>
+                            - UI/UX (React, Flutter – descrevem "o que" renderizar).
+                    </p>
+                    <br>
+                    <div class="code-container">
+                        <!-- Bloco de Código (Highlight.js) -->
+                        <pre><code class="language-javascript">
+                            // Exemplo: Função que calcula a soma (JAVASCRIPT)
+                            function sum(a, b) {
+                                return a + b;
+                            }
+                            console.log(sum(2, 3));
+                        </code></pre>
+                
+                        <!-- Bloco de Saída -->
+                        <div class="output">
+                            <strong>Output:</strong>
+                            5
+                        </div>
+                    </div>                </div>
+                <div id="content3" class="content-section" style="display: none;">
+                    <h3>PARADIGMA LÓGICO</h3>
+                    <p>
+                        <strong>Definição:</strong><br>
+                        O paradigma imperativo descreve a computação como uma sequência de comandos que alteram o estado do programa. É baseado em "como" fazer algo, utilizando instruções passo a passo (variáveis, loops, condicionais).
+                    </p>
+                    <br>
+                    <p>
+                        <strong>Aplicações na Indústria:</strong><br>
+                        - Sistemas embarcados (controle de hardware).<br>
+                        - Aplicações de baixo nível (drivers, kernels de SO).<br>
+                        - Scripting (Bash, Python para automação).
+                    </p>
+                    <br>
+                    <div class="code-container">
+                        <!-- Bloco de Código (Highlight.js) -->
+                        <pre><code class="language-javascript">
+                            // Exemplo: Função que calcula a soma (JAVASCRIPT)
+                            function sum(a, b) {
+                                return a + b;
+                            }
+                            console.log(sum(2, 3));
+                        </code></pre>
+                
+                        <!-- Bloco de Saída -->
+                        <div class="output">
+                            <strong>Output:</strong>
+                            5
+                        </div>
+                    </div>                </div>
+                <div id="content4" class="content-section" style="display: none;">
+                    <h3>PARADIGMA FUNCIONAL</h3>
+                    <p>
+                        <strong>Definição:</strong><br>
+                        O paradigma imperativo descreve a computação como uma sequência de comandos que alteram o estado do programa. É baseado em "como" fazer algo, utilizando instruções passo a passo (variáveis, loops, condicionais).
+                    </p>
+                    <br>
+                    <p>
+                        <strong>Aplicações na Indústria:</strong><br>
+                        - Sistemas embarcados (controle de hardware).<br>
+                        - Aplicações de baixo nível (drivers, kernels de SO).<br>
+                        - Scripting (Bash, Python para automação).
+                    </p>
+                    <br>
+                    <div class="code-container">
+                        <!-- Bloco de Código (Highlight.js) -->
+                        <pre><code class="language-javascript">
+                            // Exemplo: Função que calcula a soma (JAVASCRIPT)
+                            function sum(a, b) {
+                                return a + b;
+                            }
+                            console.log(sum(2, 3));
+                        </code></pre>
+                
+                        <!-- Bloco de Saída -->
+                        <div class="output">
+                            <strong>Output:</strong>
+                            5
+                        </div>
+                    </div>                </div>
+                <div id="content5" class="content-section" style="display: none;">
+                    <h3>PARADIGMA ORIENTADO A EVENTOS</h3>
+                    <p>
+                        <strong>Definição:</strong><br>
+                        O paradigma imperativo descreve a computação como uma sequência de comandos que alteram o estado do programa. É baseado em "como" fazer algo, utilizando instruções passo a passo (variáveis, loops, condicionais).
+                    </p>
+                    <br>
+                    <p>
+                        <strong>Aplicações na Indústria:</strong><br>
+                        - Sistemas embarcados (controle de hardware).<br>
+                        - Aplicações de baixo nível (drivers, kernels de SO).<br>
+                        - Scripting (Bash, Python para automação).
+                    </p>
+                    <br>
+                    <div class="code-container">
+                        <!-- Bloco de Código (Highlight.js) -->
+                        <pre><code class="language-javascript">
+                            // Exemplo: Função que calcula a soma (JAVASCRIPT)
+                            function sum(a, b) {
+                                return a + b;
+                            }
+                            console.log(sum(2, 3));
+                        </code></pre>
+                
+                        <!-- Bloco de Saída -->
+                        <div class="output">
+                            <strong>Output:</strong>
+                            5
+                        </div>
+                    </div>                </div>
+                <div id="content6" class="content-section" style="display: none;">
+                    <h3>PARADIGMA ORIENTADO A OBJETOS</h3>
+                    <p>
+                        <strong>Definição:</strong><br>
+                        O paradigma imperativo descreve a computação como uma sequência de comandos que alteram o estado do programa. É baseado em "como" fazer algo, utilizando instruções passo a passo (variáveis, loops, condicionais).
+                    </p>
+                    <br>
+                    <p>
+                        <strong>Aplicações na Indústria:</strong><br>
+                        - Sistemas embarcados (controle de hardware).<br>
+                        - Aplicações de baixo nível (drivers, kernels de SO).<br>
+                        - Scripting (Bash, Python para automação).
+                    </p>
+                    <br>
+                    <div class="code-container">
+                        <!-- Bloco de Código (Highlight.js) -->
+                        <pre><code class="language-javascript">
+                            // Exemplo: Função que calcula a soma (JAVASCRIPT)
+                            function sum(a, b) {
+                                return a + b;
+                            }
+                            console.log(sum(2, 3));
+                        </code></pre>
+                
+                        <!-- Bloco de Saída -->
+                        <div class="output">
+                            <strong>Output:</strong>
+                            5
+                        </div>
+                    </div>                </div>
+                <div id="content7" class="content-section" style="display: none;">
+                    <h3>PARADIGMA CONCORRENTE</h3>
+                    <p>
+                        <strong>Definição:</strong><br>
+                        O paradigma imperativo descreve a computação como uma sequência de comandos que alteram o estado do programa. É baseado em "como" fazer algo, utilizando instruções passo a passo (variáveis, loops, condicionais).
+                    </p>
+                    <br>
+                    <p>
+                        <strong>Aplicações na Indústria:</strong><br>
+                        - Sistemas embarcados (controle de hardware).<br>
+                        - Aplicações de baixo nível (drivers, kernels de SO).<br>
+                        - Scripting (Bash, Python para automação).
+                    </p>
+                    <br>
+                    <div class="code-container">
+                        <!-- Bloco de Código (Highlight.js) -->
+                        <pre><code class="language-javascript">
+                            // Exemplo: Função que calcula a soma (JAVASCRIPT)
+                            function sum(a, b) {
+                                return a + b;
+                            }
+                            console.log(sum(2, 3));
+                        </code></pre>
+                
+                        <!-- Bloco de Saída -->
+                        <div class="output">
+                            <strong>Output:</strong>
+                            5
+                        </div>
+                    </div>                </div>
+                <div id="content8" class="content-section" style="display: none;">
+                    <h3>MULTIPARADIGMA</h3>
+                    <p>
+                        <strong>Definição:</strong><br>
+                        O paradigma imperativo descreve a computação como uma sequência de comandos que alteram o estado do programa. É baseado em "como" fazer algo, utilizando instruções passo a passo (variáveis, loops, condicionais).
+                    </p>
+                    <br>
+                    <p>
+                        <strong>Aplicações na Indústria:</strong><br>
+                        - Sistemas embarcados (controle de hardware).<br>
+                        - Aplicações de baixo nível (drivers, kernels de SO).<br>
+                        - Scripting (Bash, Python para automação).
+                    </p>
+                    <br>
+                    <div class="code-container">
+                        <!-- Bloco de Código (Highlight.js) -->
+                        <pre><code class="language-javascript">
+                            // Exemplo: Função que calcula a soma (JAVASCRIPT)
+                            function sum(a, b) {
+                                return a + b;
+                            }
+                            console.log(sum(2, 3));
+                        </code></pre>
+                
+                        <!-- Bloco de Saída -->
+                        <div class="output">
+                            <strong>Output:</strong>
+                            5
+                        </div>
+                    </div>                </div>
+                <!-- Repeat for content3 through content7 -->
+            </div>
+        </div>
+    </div>
+
+    <script>hljs.highlightAll();</script>
+    <script src="scripts/firebase-config.js"></script>
+    <script src="scripts/app.js"></script>
+</body>
+</html>
